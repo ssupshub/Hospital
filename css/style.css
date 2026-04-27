@@ -30,6 +30,47 @@
     --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ===== DARK MODE ===== */
+[data-theme="dark"] {
+    --bg: #0d1117;
+    --bg-dark: #010409;
+    --surface: #161b22;
+    --surface-hover: #1c2128;
+    --text: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --border: #30363d;
+    --primary-light: rgba(15,98,254,0.15);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+    --shadow-xl: 0 16px 48px rgba(0,0,0,0.6);
+}
+[data-theme="dark"] .navbar { background: rgba(22,27,34,0.92); }
+[data-theme="dark"] .feature-card .icon.blue { background: rgba(15,98,254,0.15); }
+[data-theme="dark"] .feature-card .icon.teal { background: rgba(8,189,186,0.15); }
+[data-theme="dark"] .feature-card .icon.amber { background: rgba(217,119,6,0.15); }
+[data-theme="dark"] .feature-card .icon.rose { background: rgba(219,39,119,0.15); }
+[data-theme="dark"] thead { background: #1c2128; }
+[data-theme="dark"] .btn-edit { background: rgba(14,165,233,0.15); color: #38bdf8; }
+[data-theme="dark"] .btn-delete { background: rgba(218,30,40,0.15); color: #f87171; }
+[data-theme="dark"] .bill-total { background: rgba(15,98,254,0.12); }
+[data-theme="dark"] input, [data-theme="dark"] select { background: var(--surface); color: var(--text); }
+[data-theme="dark"] .search-input { background: var(--surface); color: var(--text); }
+
+/* Theme Toggle Button */
+.theme-toggle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px;
+    transition: var(--transition);
+    margin-left: 4px; padding: 0;
+}
+.theme-toggle:hover { background: var(--primary-light); border-color: var(--primary); transform: none; }
+
 /* ===== RESET ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
