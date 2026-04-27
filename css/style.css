@@ -114,7 +114,7 @@ button:hover {
 .login-left {
     flex: 1;
     background: linear-gradient(rgba(0,119,182,0.7), rgba(0,119,182,0.7)),
-                url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d') no-repeat center/cover;
+                url('../images/hospital-images.jpg') no-repeat center/cover;
     color: white;
     display: flex;
     flex-direction: column;
