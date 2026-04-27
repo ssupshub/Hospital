@@ -1,24 +1,61 @@
-<div class="stats">
-    <canvas id="myChart" height="100"></canvas>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="loadDashboardData()">
 
+<header class="navbar">
+    <div class="logo">🏥 LifeCare Dashboard</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="patient.html">Patient</a>
+        <a href="doctor.html">Doctor</a>
+        <a href="appointment.html">Appointment</a>
+        <a href="billing.html">Billing</a>
+        <button onclick="logout()">Logout</button>
+    </nav>
+</header>
+
+<div class="stats">
     <div class="stat-box">
         <h3 id="totalPatients">0</h3>
         <p>Patients</p>
     </div>
-
     <div class="stat-box">
         <h3 id="totalDoctors">0</h3>
         <p>Doctors</p>
     </div>
-
     <div class="stat-box">
         <h3 id="totalAppointments">0</h3>
         <p>Appointments</p>
     </div>
-
     <div class="stat-box">
         <h3 id="totalRevenue">₹0</h3>
         <p>Revenue</p>
     </div>
-
 </div>
+
+<div class="cards">
+    <div class="card" onclick="goTo('patient.html')">Manage Patients</div>
+    <div class="card" onclick="goTo('doctor.html')">Manage Doctors</div>
+    <div class="card" onclick="goTo('appointment.html')">Manage Appointments</div>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+function loadDashboardData() {
+    let patients = JSON.parse(localStorage.getItem("patients")) || [];
+    let doctors = JSON.parse(localStorage.getItem("doctors")) || [];
+    let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+    
+    document.getElementById("totalPatients").innerText = patients.length;
+    document.getElementById("totalDoctors").innerText = doctors.length;
+    document.getElementById("totalAppointments").innerText = appointments.length;
+    document.getElementById("totalRevenue").innerText = "₹" + (patients.length * 500); // Simple calculation
+}
+</script>
+</body>
+</html>
