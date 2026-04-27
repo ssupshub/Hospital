@@ -162,6 +162,71 @@ cd backend
 waitress-serve --host=0.0.0.0 --port=5000 app:app
 ```
 
+### Deploy to AWS EC2 (Ubuntu)
+
+This is the recommended approach for full control over your backend hosting using an AWS EC2 instance.
+
+#### 1. EC2 Instance Setup
+1. Launch an Ubuntu 22.04/24.04 EC2 instance on AWS.
+2. In the Security Group, open ports: `22` (SSH), `80` (HTTP), `443` (HTTPS), and `5000` (Backend API).
+3. Connect to your instance via SSH: `ssh -i your-key.pem ubuntu@<your-ec2-ip>`
+
+#### 2. Install System Dependencies
+```bash
+sudo apt update
+sudo apt install python3-pip python3-venv git nginx -y
+```
+
+#### 3. Clone and Setup Backend
+```bash
+git clone <your-repository-url> hospital-app
+cd hospital-app/backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+#### 4. Configure Environment Variables
+```bash
+cd ..
+nano .env
+```
+Add your MongoDB Atlas URI:
+```env
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/hospital?retryWrites=true&w=majority
+PORT=5000
+DEBUG=False
+```
+*(Note: `.env` is ignored by git, so you must create it manually on the server)*
+
+#### 5. Run Backend with Gunicorn/Systemd
+Create a systemd service to keep the backend running:
+```bash
+sudo nano /etc/systemd/system/hospital-backend.service
+```
+Add:
+```ini
+[Unit]
+Description=Gunicorn instance to serve Hospital Backend
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/hospital-app/backend
+Environment="PATH=/home/ubuntu/hospital-app/backend/venv/bin"
+ExecStart=/home/ubuntu/hospital-app/backend/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 app:app
+
+[Install]
+WantedBy=multi-user.target
+```
+Start the service:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start hospital-backend
+sudo systemctl enable hospital-backend
+```
+
 ### Deploy to Render (Free Hosting)
 
 1. Push your code to a GitHub repository.
@@ -197,6 +262,29 @@ Before deploying the frontend, update the `API_URL` in `js/script.js` to point t
 ```javascript
 const API_URL = "https://your-backend-url.onrender.com";
 ```
+
+### Deploy to AWS EC2 (Nginx)
+
+If you have set up your backend on an AWS EC2 instance, you can host the frontend on the same server using Nginx.
+
+1. Update `API_URL` in `js/script.js` to your EC2 public IP or domain:
+```javascript
+const API_URL = "http://<your-ec2-public-ip>:5000";
+```
+
+2. Copy your frontend files to Nginx's web root:
+```bash
+sudo rm -rf /var/www/html/*
+sudo cp -r /home/ubuntu/hospital-app/*.html /var/www/html/
+sudo cp -r /home/ubuntu/hospital-app/css /var/www/html/
+sudo cp -r /home/ubuntu/hospital-app/js /var/www/html/
+```
+
+3. Restart Nginx:
+```bash
+sudo systemctl restart nginx
+```
+Your frontend is now live at `http://<your-ec2-public-ip>`.
 
 ### Deploy to GitHub Pages
 

@@ -1,4 +1,5 @@
 import os
+import certifi
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
@@ -13,8 +14,18 @@ CORS(app)
 
 # ================= DATABASE CONNECTION =================
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/hospital")
-client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+# Added tlsCAFile=certifi.where() to fix SSL certificate issues with MongoDB Atlas on AWS Ubuntu
+client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000, tlsCAFile=certifi.where())
 db = client.get_database()
+
+# Auto-seed if database is empty
+try:
+    if db.patients.count_documents({}) == 0 and db.doctors.count_documents({}) == 0:
+        print("Database is empty. Running auto-seed...")
+        from seed import seed_db
+        seed_db(db)
+except Exception as e:
+    print(f"Error checking or seeding database: {e}")
 
 # Collections
 patients_col = db.patients

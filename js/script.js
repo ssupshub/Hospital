@@ -18,7 +18,9 @@ function toggleTheme() {
 /* ==========================================================================
    CONFIG
    ========================================================================== */
-const API_URL = "http://localhost:5000";
+// Automatically detect the API URL based on where the frontend is hosted.
+// Works for both localhost development and AWS EC2 production.
+const API_URL = `${window.location.protocol}//${window.location.hostname}:5000`;
 
 function goTo(page) { window.location.href = page; }
 function logout() { localStorage.removeItem("loggedIn"); window.location.href = "login.html"; }
