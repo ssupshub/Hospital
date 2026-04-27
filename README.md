@@ -1,7 +1,7 @@
 # Hospital Management System
 
 ## Overview
-The Hospital Management System is a comprehensive web-based application designed to streamline healthcare facility operations. It provides a centralized platform for managing patient records, doctor schedules, appointments, and billing processes. The system features a clean, responsive interface and a robust backend integrated with MongoDB.
+The Hospital Management System is a comprehensive web-based application designed to streamline healthcare facility operations. It provides a centralized platform for managing patient records, doctor schedules, appointments, and billing processes. The system features a clean, modern interface and a robust backend integrated with MongoDB.
 
 ## Features
 - Dashboard: Real-time statistical overview of patients, doctors, appointments, and total revenue.
@@ -12,35 +12,38 @@ The Hospital Management System is a comprehensive web-based application designed
 - Secure Authentication: Administrative login system for protected access to management modules.
 
 ## Technology Stack
-- Frontend: HTML5, CSS3 (Consolidated Style System), JavaScript (ES6+ Fetch API).
+- Frontend: HTML5, CSS3 (Custom Design System with CSS Variables), JavaScript (ES6+ Async/Await Fetch API).
 - Backend: Python (Flask Framework).
-- Database: MongoDB.
+- Database: MongoDB (via PyMongo).
 - Configuration: Dotenv for environment variable management.
+- Typography: Inter (Google Fonts).
 
 ## Project Structure
 ```
 Hospital/
 ├── backend/
-│   ├── app.py          (Flask API Server)
-│   └── hospital.db     (Legacy SQLite - Optional)
+│   └── app.py              (Flask API Server with MongoDB)
 ├── css/
-│   └── style.css       (Consolidated Global Styles)
-├── images/
-│   └── hospital-images.jpg
+│   └── style.css            (Design System with CSS Variables)
 ├── js/
-│   └── script.js       (Consolidated Frontend Logic)
-├── index.html          (Main Landing Page)
-├── dashboard.html      (Administrative Dashboard)
-├── login.html          (Authentication Page)
-├── .env                (Environment Configuration)
-└── README.md           (System Documentation)
+│   └── script.js            (Frontend Logic with Fetch API)
+├── index.html               (Landing Page)
+├── dashboard.html           (Administrative Dashboard)
+├── login.html               (Authentication Page)
+├── patient.html             (Patient Management)
+├── doctor.html              (Doctor Management)
+├── appointment.html         (Appointment Booking)
+├── billing.html             (Billing System)
+├── .env                     (Environment Configuration)
+├── .env.example             (Environment Template)
+└── README.md                (Documentation)
 ```
 
 ## Installation and Setup
 
 ### Prerequisites
 - Python 3.8 or higher
-- MongoDB Community Server
+- MongoDB Community Server (running on localhost:27017)
 - Pip (Python Package Manager)
 
 ### Backend Configuration
@@ -56,15 +59,22 @@ Hospital/
    python backend/app.py
    ```
 
-### Frontend Deployment
+### Frontend
 The frontend is built using standard web technologies and does not require a build step.
 1. Open `index.html` in a modern web browser.
-2. Ensure the backend server is running to enable database interactions.
+2. Ensure the backend server is running on port 5000 to enable database interactions.
 
-## Usage
-- Access the system through the landing page.
-- Navigate to the Login module to gain administrative access (Default credentials: admin / admin123).
-- Use the Dashboard to navigate between different management modules.
+## Default Credentials
+- Username: admin
+- Password: admin123
+
+## Design System
+The UI is built with a custom CSS design system featuring:
+- CSS custom properties for consistent theming
+- Inter font family for modern typography
+- Responsive grid layouts with mobile breakpoints
+- Subtle animations and transitions
+- Clean card-based component architecture
 
 ## License
 This project is for educational and internal management purposes.
