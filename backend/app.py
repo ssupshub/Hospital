@@ -1,92 +1,56 @@
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import sqlite3
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-# ================= DATABASE =================
-def get_db():
-    conn = sqlite3.connect("hospital.db")
-    conn.row_factory = sqlite3.Row
-    return conn
+# ================= DATABASE CONNECTION =================
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/hospital")
+client = MongoClient(MONGO_URI)
+db = client.get_database() # Uses database name from URI or default
 
-# ================= CREATE TABLES =================
-def create_tables():
-    conn = get_db()
+# Collections
+patients_col = db.patients
+doctors_col = db.doctors
+appointments_col = db.appointments
+bills_col = db.bills
 
-    # PATIENT
-    conn.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT,
-        password TEXT
-    )
-    """)
-
-    # DOCTOR
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS doctors (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            specialization TEXT,
-            experience INTEGER
-        )
-    """)
-
-    # APPOINTMENT
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS appointments (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            patient TEXT,
-            doctor TEXT,
-            date TEXT,
-            time TEXT
-        )
-    """)
-
-    # BILLING
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS bills (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            patient TEXT,
-            treatment REAL,
-            medicine REAL,
-            doctor_fee REAL,
-            total REAL
-        )
-    """)
-
-    conn.commit()
-    conn.close()
-
-create_tables()
+# Helper to convert MongoDB objects to JSON serializable
+def mongo_to_dict(obj):
+    if obj is None: return None
+    obj["id"] = str(obj["_id"])
+    del obj["_id"]
+    return obj
 
 # ================= PATIENT API =================
 
 @app.route("/addPatient", methods=["POST"])
 def add_patient():
     data = request.json
-    conn = get_db()
-    conn.execute("INSERT INTO patients (name, age, disease, phone) VALUES (?, ?, ?, ?)",
-                 (data["name"], data["age"], data["disease"], data["phone"]))
-    conn.commit()
-    conn.close()
-    return jsonify({"message": "Patient added"})
+    result = patients_col.insert_one(data)
+    return jsonify({"message": "Patient added", "id": str(result.inserted_id)})
 
 @app.route("/getPatients", methods=["GET"])
 def get_patients():
-    conn = get_db()
-    data = conn.execute("SELECT * FROM patients").fetchall()
-    conn.close()
-    return jsonify([dict(row) for row in data])
+    patients = list(patients_col.find())
+    return jsonify([mongo_to_dict(p) for p in patients])
 
-@app.route("/deletePatient/<int:id>", methods=["DELETE"])
+@app.route("/updatePatient/<id>", methods=["PUT"])
+def update_patient(id):
+    data = request.json
+    patients_col.update_one({"_id": ObjectId(id)}, {"$set": data})
+    return jsonify({"message": "Patient updated"})
+
+@app.route("/deletePatient/<id>", methods=["DELETE"])
 def delete_patient(id):
-    conn = get_db()
-    conn.execute("DELETE FROM patients WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
+    patients_col.delete_one({"_id": ObjectId(id)})
     return jsonify({"message": "Deleted"})
 
 # ================= DOCTOR API =================
@@ -94,26 +58,23 @@ def delete_patient(id):
 @app.route("/addDoctor", methods=["POST"])
 def add_doctor():
     data = request.json
-    conn = get_db()
-    conn.execute("INSERT INTO doctors (name, specialization, experience) VALUES (?, ?, ?)",
-                 (data["name"], data["specialization"], data["experience"]))
-    conn.commit()
-    conn.close()
-    return jsonify({"message": "Doctor added"})
+    result = doctors_col.insert_one(data)
+    return jsonify({"message": "Doctor added", "id": str(result.inserted_id)})
 
 @app.route("/getDoctors", methods=["GET"])
 def get_doctors():
-    conn = get_db()
-    data = conn.execute("SELECT * FROM doctors").fetchall()
-    conn.close()
-    return jsonify([dict(row) for row in data])
+    doctors = list(doctors_col.find())
+    return jsonify([mongo_to_dict(d) for d in doctors])
 
-@app.route("/deleteDoctor/<int:id>", methods=["DELETE"])
+@app.route("/updateDoctor/<id>", methods=["PUT"])
+def update_doctor(id):
+    data = request.json
+    doctors_col.update_one({"_id": ObjectId(id)}, {"$set": data})
+    return jsonify({"message": "Doctor updated"})
+
+@app.route("/deleteDoctor/<id>", methods=["DELETE"])
 def delete_doctor(id):
-    conn = get_db()
-    conn.execute("DELETE FROM doctors WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
+    doctors_col.delete_one({"_id": ObjectId(id)})
     return jsonify({"message": "Deleted"})
 
 # ================= APPOINTMENT API =================
@@ -121,26 +82,17 @@ def delete_doctor(id):
 @app.route("/addAppointment", methods=["POST"])
 def add_appointment():
     data = request.json
-    conn = get_db()
-    conn.execute("INSERT INTO appointments (patient, doctor, date, time) VALUES (?, ?, ?, ?)",
-                 (data["patient"], data["doctor"], data["date"], data["time"]))
-    conn.commit()
-    conn.close()
-    return jsonify({"message": "Appointment booked"})
+    result = appointments_col.insert_one(data)
+    return jsonify({"message": "Appointment booked", "id": str(result.inserted_id)})
 
 @app.route("/getAppointments", methods=["GET"])
 def get_appointments():
-    conn = get_db()
-    data = conn.execute("SELECT * FROM appointments").fetchall()
-    conn.close()
-    return jsonify([dict(row) for row in data])
+    appointments = list(appointments_col.find())
+    return jsonify([mongo_to_dict(a) for a in appointments])
 
-@app.route("/deleteAppointment/<int:id>", methods=["DELETE"])
+@app.route("/deleteAppointment/<id>", methods=["DELETE"])
 def delete_appointment(id):
-    conn = get_db()
-    conn.execute("DELETE FROM appointments WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
+    appointments_col.delete_one({"_id": ObjectId(id)})
     return jsonify({"message": "Deleted"})
 
 # ================= BILLING API =================
@@ -148,36 +100,29 @@ def delete_appointment(id):
 @app.route("/addBill", methods=["POST"])
 def add_bill():
     data = request.json
-
-    total = data["treatment"] + data["medicine"] + data["doctor_fee"]
-
-    conn = get_db()
-    conn.execute("""
-        INSERT INTO bills (patient, treatment, medicine, doctor_fee, total)
-        VALUES (?, ?, ?, ?, ?)
-    """, (data["patient"], data["treatment"], data["medicine"], data["doctor_fee"], total))
-
-    conn.commit()
-    conn.close()
-
-    return jsonify({"message": "Bill generated", "total": total})
+    # Convert string numbers to float if they are strings
+    treatment = float(data.get("treatment", 0))
+    medicine = float(data.get("medicine", 0))
+    doctor_fee = float(data.get("doctor_fee", 0))
+    
+    data["total"] = treatment + medicine + doctor_fee
+    result = bills_col.insert_one(data)
+    
+    return jsonify({"message": "Bill generated", "id": str(result.inserted_id), "total": data["total"]})
 
 @app.route("/getBills", methods=["GET"])
 def get_bills():
-    conn = get_db()
-    data = conn.execute("SELECT * FROM bills").fetchall()
-    conn.close()
-    return jsonify([dict(row) for row in data])
+    bills = list(bills_col.find())
+    return jsonify([mongo_to_dict(b) for b in bills])
 
-@app.route("/deleteBill/<int:id>", methods=["DELETE"])
+@app.route("/deleteBill/<id>", methods=["DELETE"])
 def delete_bill(id):
-    conn = get_db()
-    conn.execute("DELETE FROM bills WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
+    bills_col.delete_one({"_id": ObjectId(id)})
     return jsonify({"message": "Deleted"})
 
 # ================= RUN =================
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.getenv("PORT", 5000))
+    debug = os.getenv("DEBUG", "True") == "True"
+    app.run(host="0.0.0.0", port=port, debug=debug)
