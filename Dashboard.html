@@ -2,72 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hospital Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LifeCare Hospital</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body onload="loadDashboardData()">
 
 <header class="navbar">
-    <div class="logo">🏥 LifeCare Dashboard</div>
+    <div class="logo">
+        <div class="logo-icon">LC</div>
+        LifeCare
+    </div>
     <nav>
         <a href="index.html">Home</a>
-        <a href="patient.html">Patient</a>
-        <a href="doctor.html">Doctor</a>
-        <a href="appointment.html">Appointment</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="patient.html">Patients</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="appointment.html">Appointments</a>
         <a href="billing.html">Billing</a>
-        <button onclick="logout()">Logout</button>
+        <button onclick="logout()" class="btn-ghost btn-sm">Logout</button>
     </nav>
 </header>
 
-<div class="stats">
-    <div class="stat-box">
-        <h3 id="totalPatients">0</h3>
-        <p>Patients</p>
-    </div>
-    <div class="stat-box">
-        <h3 id="totalDoctors">0</h3>
-        <p>Doctors</p>
-    </div>
-    <div class="stat-box">
-        <h3 id="totalAppointments">0</h3>
-        <p>Appointments</p>
-    </div>
-    <div class="stat-box">
-        <h3 id="totalRevenue">₹0</h3>
-        <p>Revenue</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Overview of hospital activity and quick access to modules</p>
     </div>
 </div>
 
-<div class="cards">
-    <div class="card" onclick="goTo('patient.html')">Manage Patients</div>
-    <div class="card" onclick="goTo('doctor.html')">Manage Doctors</div>
-    <div class="card" onclick="goTo('appointment.html')">Manage Appointments</div>
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#d0e2ff;color:#0f62fe;">P</div>
+        <div class="stat-label">Total Patients</div>
+        <div class="stat-value" id="totalPatients">0</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#d1fae5;color:#009d9a;">D</div>
+        <div class="stat-label">Total Doctors</div>
+        <div class="stat-value" id="totalDoctors">0</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#fef3c7;color:#d97706;">A</div>
+        <div class="stat-label">Appointments</div>
+        <div class="stat-value" id="totalAppointments">0</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#fce7f3;color:#db2777;">R</div>
+        <div class="stat-label">Revenue</div>
+        <div class="stat-value" id="totalRevenue">0</div>
+    </div>
 </div>
+
+<div class="quick-links">
+    <div class="quick-card" onclick="goTo('patient.html')">
+        <div class="qc-icon" style="background:#d0e2ff;color:#0f62fe;">P</div>
+        <div class="qc-info">
+            <h3>Manage Patients</h3>
+            <p>Add, edit, and manage patient records</p>
+        </div>
+    </div>
+    <div class="quick-card" onclick="goTo('doctor.html')">
+        <div class="qc-icon" style="background:#d1fae5;color:#009d9a;">D</div>
+        <div class="qc-info">
+            <h3>Manage Doctors</h3>
+            <p>View and update doctor information</p>
+        </div>
+    </div>
+    <div class="quick-card" onclick="goTo('appointment.html')">
+        <div class="qc-icon" style="background:#fef3c7;color:#d97706;">A</div>
+        <div class="qc-info">
+            <h3>Manage Appointments</h3>
+            <p>Schedule and track all appointments</p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 LifeCare Hospital. All Rights Reserved.</p>
+</footer>
 
 <script src="js/script.js"></script>
 <script>
 async function loadDashboardData() {
     try {
-        const patientsRes = await fetch(`${API_URL}/getPatients`);
-        const patients = await patientsRes.json();
-        
-        const doctorsRes = await fetch(`${API_URL}/getDoctors`);
-        const doctors = await doctorsRes.json();
-        
-        const appointmentsRes = await fetch(`${API_URL}/getAppointments`);
-        const appointments = await appointmentsRes.json();
-
-        const billsRes = await fetch(`${API_URL}/getBills`);
-        const bills = await billsRes.json();
-        
+        const [pRes, dRes, aRes, bRes] = await Promise.all([
+            fetch(API_URL + "/getPatients"),
+            fetch(API_URL + "/getDoctors"),
+            fetch(API_URL + "/getAppointments"),
+            fetch(API_URL + "/getBills")
+        ]);
+        const [patients, doctors, appointments, bills] = await Promise.all([
+            pRes.json(), dRes.json(), aRes.json(), bRes.json()
+        ]);
         document.getElementById("totalPatients").innerText = patients.length;
         document.getElementById("totalDoctors").innerText = doctors.length;
         document.getElementById("totalAppointments").innerText = appointments.length;
-        
         let revenue = bills.reduce((sum, b) => sum + (b.total || 0), 0);
-        document.getElementById("totalRevenue").innerText = "₹" + revenue;
+        document.getElementById("totalRevenue").innerText = "Rs." + revenue;
     } catch (err) {
-        console.error("Error loading dashboard data:", err);
+        console.error("Dashboard load error:", err);
     }
 }
 </script>
