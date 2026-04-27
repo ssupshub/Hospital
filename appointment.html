@@ -1,48 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Appointment Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments - LifeCare Hospital</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body onload="displayAppointments()">
 
-<h2 style="text-align:center;">Appointment Management</h2>
+<header class="navbar">
+    <div class="logo"><div class="logo-icon">LC</div> LifeCare</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patient.html">Patients</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="appointment.html" class="active">Appointments</a>
+        <a href="billing.html">Billing</a>
+        <button onclick="logout()" class="btn-ghost btn-sm">Logout</button>
+    </nav>
+</header>
 
-<!-- SEARCH -->
-<div style="text-align:center;">
-    <input type="text" id="searchAppointment" placeholder="Search by patient or doctor">
-    <button onclick="searchAppointment()">Search</button>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h1>Appointment Management</h1>
+        <p>Schedule and track patient-doctor appointments</p>
+    </div>
+
+    <div class="mgmt-layout">
+        <div class="form-panel">
+            <h3>Book Appointment</h3>
+            <input type="text" id="apatient" placeholder="Patient Name">
+            <input type="text" id="adoctor" placeholder="Doctor Name">
+            <input type="date" id="adate">
+            <input type="time" id="atime">
+            <button onclick="saveAppointment()">Book Appointment</button>
+        </div>
+
+        <div class="data-panel">
+            <div class="panel-header">
+                <h3>Appointment Records</h3>
+                <input type="text" class="search-input" id="searchAppointment" placeholder="Search appointments...">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTable"></tbody>
+            </table>
+        </div>
+    </div>
 </div>
-
-<br>
-
-<!-- FORM -->
-<div class="form-box">
-    <input type="text" id="apatient" placeholder="Patient Name">
-    <input type="text" id="adoctor" placeholder="Doctor Name">
-    <input type="date" id="adate">
-    <input type="time" id="atime">
-
-    <button onclick="saveAppointment()">Book Appointment</button>
-</div>
-
-<!-- TABLE -->
-<table border="1" width="85%" align="center">
-    <thead>
-        <tr>
-            <th>Patient</th>
-            <th>Doctor</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-
-    <tbody id="appointmentTable"></tbody>
-</table>
 
 <script src="js/script.js"></script>
-
 </body>
 </html>

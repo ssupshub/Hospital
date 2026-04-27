@@ -1,50 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Billing System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing - LifeCare Hospital</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body onload="displayBills()">
 
-<h2 style="text-align:center;">Hospital Billing System</h2>
+<header class="navbar">
+    <div class="logo"><div class="logo-icon">LC</div> LifeCare</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patient.html">Patients</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="appointment.html">Appointments</a>
+        <a href="billing.html" class="active">Billing</a>
+        <button onclick="logout()" class="btn-ghost btn-sm">Logout</button>
+    </nav>
+</header>
 
-<!-- FORM -->
-<div class="form-box">
+<div class="page-wrapper">
+    <div class="page-header">
+        <h1>Billing System</h1>
+        <p>Generate and manage patient bills</p>
+    </div>
 
-    <input type="text" id="bpatient" placeholder="Patient Name"><br>
+    <div class="mgmt-layout">
+        <div class="form-panel">
+            <h3>Generate Bill</h3>
+            <input type="text" id="bpatient" placeholder="Patient Name">
+            <input type="number" id="btreatment" placeholder="Treatment Charges" oninput="calculateTotal()">
+            <input type="number" id="bmedicine" placeholder="Medicine Charges" oninput="calculateTotal()">
+            <input type="number" id="bdoctor" placeholder="Doctor Fees" oninput="calculateTotal()">
+            <div class="bill-total" id="total">Total: Rs. 0</div>
+            <button onclick="saveBill()">Generate Bill</button>
+        </div>
 
-    <input type="number" id="btreatment" placeholder="Treatment Charges" oninput="calculateTotal()"><br>
-
-    <input type="number" id="bmedicine" placeholder="Medicine Charges" oninput="calculateTotal()"><br>
-
-    <input type="number" id="bdoctor" placeholder="Doctor Fees" oninput="calculateTotal()"><br>
-
-    <h3 id="total">Total: ₹ 0</h3>
-
-    <button onclick="saveBill()">Generate Bill</button>
-
+        <div class="data-panel">
+            <div class="panel-header">
+                <h3>Bill Records</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Treatment</th>
+                        <th>Medicine</th>
+                        <th>Doctor Fee</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="billTable"></tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<br>
-
-<!-- TABLE -->
-<table border="1" width="90%" align="center">
-    <thead>
-        <tr>
-            <th>Patient</th>
-            <th>Treatment</th>
-            <th>Medicine</th>
-            <th>Doctor Fee</th>
-            <th>Total</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-
-    <tbody id="billTable"></tbody>
-</table>
-
 <script src="js/script.js"></script>
-
 </body>
 </html>

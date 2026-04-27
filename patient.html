@@ -2,58 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Patient Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients - LifeCare Hospital</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body onload="loadPatients()">
 
-<!-- NAVBAR -->
 <header class="navbar">
-    <h2>🏥 Patient Management System</h2>
-    <button class="logout" onclick="logout()">Logout</button>
+    <div class="logo"><div class="logo-icon">LC</div> LifeCare</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patient.html" class="active">Patients</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="appointment.html">Appointments</a>
+        <a href="billing.html">Billing</a>
+        <button onclick="logout()" class="btn-ghost btn-sm">Logout</button>
+    </nav>
 </header>
 
-<!-- CONTAINER -->
-<div class="container">
-
-    <!-- LEFT: FORM -->
-    <div class="form-section">
-        <h3>Add / Update Patient</h3>
-
-        <input type="text" id="pname" placeholder="Full Name">
-        <input type="number" id="page" placeholder="Age">
-        <input type="text" id="pdisease" placeholder="Disease">
-        <input type="text" id="pphone" placeholder="Phone Number">
-
-        <button onclick="savePatient()">Save Patient</button>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h1>Patient Management</h1>
+        <p>Add, edit, and manage patient records</p>
     </div>
 
-    <!-- RIGHT: TABLE -->
-    <div class="table-section">
-
-        <!-- SEARCH -->
-        <div class="search-box">
-            <input type="text" id="search" placeholder="Search patient...">
-            <button onclick="searchPatient()">Search</button>
+    <div class="mgmt-layout">
+        <div class="form-panel">
+            <h3>Add / Update Patient</h3>
+            <input type="text" id="pname" placeholder="Full Name">
+            <input type="number" id="page" placeholder="Age">
+            <input type="text" id="pdisease" placeholder="Disease">
+            <input type="text" id="pphone" placeholder="Phone Number">
+            <button onclick="savePatient()">Save Patient</button>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Disease</th>
-                    <th>Phone</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody id="patientTable"></tbody>
-        </table>
-
+        <div class="data-panel">
+            <div class="panel-header">
+                <h3>Patient Records</h3>
+                <input type="text" class="search-input" id="search" placeholder="Search patients..." oninput="searchPatient()">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Disease</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="patientTable"></tbody>
+            </table>
+        </div>
     </div>
-
 </div>
 
 <script src="js/script.js"></script>
