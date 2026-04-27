@@ -46,15 +46,29 @@
 
 <script src="js/script.js"></script>
 <script>
-function loadDashboardData() {
-    let patients = JSON.parse(localStorage.getItem("patients")) || [];
-    let doctors = JSON.parse(localStorage.getItem("doctors")) || [];
-    let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
-    
-    document.getElementById("totalPatients").innerText = patients.length;
-    document.getElementById("totalDoctors").innerText = doctors.length;
-    document.getElementById("totalAppointments").innerText = appointments.length;
-    document.getElementById("totalRevenue").innerText = "₹" + (patients.length * 500); // Simple calculation
+async function loadDashboardData() {
+    try {
+        const patientsRes = await fetch(`${API_URL}/getPatients`);
+        const patients = await patientsRes.json();
+        
+        const doctorsRes = await fetch(`${API_URL}/getDoctors`);
+        const doctors = await doctorsRes.json();
+        
+        const appointmentsRes = await fetch(`${API_URL}/getAppointments`);
+        const appointments = await appointmentsRes.json();
+
+        const billsRes = await fetch(`${API_URL}/getBills`);
+        const bills = await billsRes.json();
+        
+        document.getElementById("totalPatients").innerText = patients.length;
+        document.getElementById("totalDoctors").innerText = doctors.length;
+        document.getElementById("totalAppointments").innerText = appointments.length;
+        
+        let revenue = bills.reduce((sum, b) => sum + (b.total || 0), 0);
+        document.getElementById("totalRevenue").innerText = "₹" + revenue;
+    } catch (err) {
+        console.error("Error loading dashboard data:", err);
+    }
 }
 </script>
 </body>
