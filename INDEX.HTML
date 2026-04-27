@@ -1,91 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeCare Hospital</title>
-
-    <!-- CSS LINK -->
+    <title>LifeCare Hospital - Advanced Healthcare</title>
+    <meta name="description" content="LifeCare Hospital Management System - Providing world-class medical services with modern technology.">
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
 <!-- NAVBAR -->
 <header class="navbar">
-    <div class="logo">🏥 LifeCare</div>
-    
-
+    <div class="logo">
+        <div class="logo-icon">LC</div>
+        LifeCare
+    </div>
     <nav>
-    <a href="login.html" class="btn">Login</a>
-    <a href="index.html">Home</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="patient.html">Patient</a>
-    <a href="doctor.html">Doctor</a>
-    <a href="appointment.html">Appointment</a>
-    <a href="billing.html">Billing</a>
-    </nav>
-
-          
+        <a href="index.html" class="active">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patient.html">Patients</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="appointment.html">Appointments</a>
+        <a href="billing.html">Billing</a>
+        <a href="login.html" class="btn btn-primary btn-sm">Login</a>
     </nav>
 </header>
 
-<!-- HERO SECTION -->
+<!-- HERO -->
 <section class="hero">
     <div class="overlay">
-        <h1>Advanced Healthcare, Trusted Care</h1>
-        <p>Providing world-class medical services with modern technology</p>
-        <a href="#" class="btn">Book Appointment</a>
+        <div class="badge animate-in">Healthcare Management Platform</div>
+        <h1 class="animate-in delay-1">Advanced Healthcare,<br><span>Trusted Care</span></h1>
+        <p class="animate-in delay-2">A comprehensive hospital management system built for efficiency, accuracy, and seamless patient care across all departments.</p>
+        <div class="hero-actions animate-in delay-3">
+            <a href="appointment.html" class="btn btn-primary btn-lg">Book Appointment</a>
+            <a href="dashboard.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.3); color: white;">View Dashboard</a>
+        </div>
     </div>
 </section>
 
 <!-- SERVICES -->
-<section class="services">
-    <h2>Our Services</h2>
-
-    <div class="cards">
-        <div class="card">
-            <h3>👨‍⚕️ Patient Management</h3>
-            <p>Efficient handling of patient records</p>
+<section class="section">
+    <div class="section-header">
+        <h2>Our Services</h2>
+        <p>Streamlined modules for every department of your healthcare facility</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="icon blue">P</div>
+            <h3>Patient Management</h3>
+            <p>Efficiently manage patient records, medical history, and contact information with full CRUD operations.</p>
         </div>
-
-        <div class="card">
-            <h3>🩺 Doctors</h3>
-            <p>Highly experienced medical professionals</p>
+        <div class="feature-card">
+            <div class="icon teal">D</div>
+            <h3>Doctor Directory</h3>
+            <p>Maintain a comprehensive directory of medical professionals with specialization and experience tracking.</p>
         </div>
-
-        <div class="card">
-            <h3>📅 Appointments</h3>
-            <p>Quick and easy booking system</p>
+        <div class="feature-card">
+            <div class="icon amber">A</div>
+            <h3>Appointments</h3>
+            <p>Streamlined booking system for scheduling patient-doctor appointments with date and time management.</p>
         </div>
-
-        <div class="card">
-            <h3>💰 Billing</h3>
-            <p>Secure and transparent billing</p>
+        <div class="feature-card">
+            <div class="icon rose">B</div>
+            <h3>Billing System</h3>
+            <p>Automated billing with itemized charges for treatments, medicine, and doctor fees with total calculation.</p>
         </div>
     </div>
 </section>
 
 <!-- ABOUT -->
-<section class="about">
+<section class="section about">
     <div class="about-content">
         <h2>About LifeCare</h2>
-        <p>
-            LifeCare Hospital is dedicated to delivering high-quality healthcare services
-            using advanced medical technology and experienced professionals.
-            Our mission is to ensure patient satisfaction with compassionate care.
-        </p>
+        <p>LifeCare Hospital is dedicated to delivering high-quality healthcare services using advanced medical technology and experienced professionals. Our management system ensures patient satisfaction with compassionate care, accurate record-keeping, and transparent billing across all departments.</p>
     </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
-    <p>© 2026 LifeCare Hospital | All Rights Reserved</p>
+    <p>&copy; 2026 LifeCare Hospital. All Rights Reserved.</p>
 </footer>
+
 <script src="js/script.js"></script>
 </body>
 </html>
