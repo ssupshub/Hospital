@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System - Login</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Secure Hospital Management System Login">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+
+<main class="login-wrapper">
+
+    <!-- LEFT SIDE (BRANDING) -->
+    <section class="login-left">
+        <div class="branding">
+            <h1>🏥 Hospital Management System</h1>
+            <p>Secure & Smart Healthcare Solution</p>
+        </div>
+    </section>
+
+    <!-- RIGHT SIDE (LOGIN FORM) -->
+    <section class="login-right">
+
+        <form class="login-form" id="loginForm" novalidate>
+
+            <h2>Login</h2>
+
+            <!-- Username -->
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+                    autocomplete="username"
+                >
+                <small class="error-message"></small>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group password-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                >
+                <span class="toggle-password" id="togglePassword">👁️</span>
+                <small class="error-message"></small>
+            </div>
+
+            <!-- Remember + Forgot -->
+            <div class="form-options">
+                <label>
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <!-- Button -->
+            <button type="submit" class="login-btn">Login</button>
+
+            <!-- Register -->
+            <p class="register-text">
+                Don't have an account? <a href="#">Register</a>
+            </p>
+
+        </form>
+
+    </section>
+
+</main>
+
+<!-- JS -->
+<script src="js/login.js"></script>
+
+</body>
+</html>

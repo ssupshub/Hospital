@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="displayAppointments()">
+
+<h2 style="text-align:center;">Appointment Management</h2>
+
+<!-- SEARCH -->
+<div style="text-align:center;">
+    <input type="text" id="searchAppointment" placeholder="Search by patient or doctor">
+    <button onclick="searchAppointment()">Search</button>
+</div>
+
+<br>
+
+<!-- FORM -->
+<div class="form-box">
+    <input type="text" id="apatient" placeholder="Patient Name">
+    <input type="text" id="adoctor" placeholder="Doctor Name">
+    <input type="date" id="adate">
+    <input type="time" id="atime">
+
+    <button onclick="saveAppointment()">Book Appointment</button>
+</div>
+
+<!-- TABLE -->
+<table border="1" width="85%" align="center">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="appointmentTable"></tbody>
+</table>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Billing System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="displayBills()">
+
+<h2 style="text-align:center;">Hospital Billing System</h2>
+
+<!-- FORM -->
+<div class="form-box">
+
+    <input type="text" id="bpatient" placeholder="Patient Name"><br>
+
+    <input type="number" id="btreatment" placeholder="Treatment Charges" oninput="calculateTotal()"><br>
+
+    <input type="number" id="bmedicine" placeholder="Medicine Charges" oninput="calculateTotal()"><br>
+
+    <input type="number" id="bdoctor" placeholder="Doctor Fees" oninput="calculateTotal()"><br>
+
+    <h3 id="total">Total: ₹ 0</h3>
+
+    <button onclick="saveBill()">Generate Bill</button>
+
+</div>
+
+<br>
+
+<!-- TABLE -->
+<table border="1" width="90%" align="center">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Treatment</th>
+            <th>Medicine</th>
+            <th>Doctor Fee</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="billTable"></tbody>
+</table>
+
+<script src="script.js"></script>
+
+</body>
+</html>

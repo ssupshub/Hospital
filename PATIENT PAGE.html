@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="displayPatients()">
+
+<h2 style="text-align:center;">Patient Management</h2>
+
+<!-- SEARCH -->
+<div style="text-align:center;">
+    <input type="text" id="search" placeholder="Search by name or disease">
+    <button onclick="searchPatient()">Search</button>
+</div>
+
+<br>
+
+<!-- FORM -->
+<div class="form-box">
+    <input type="text" id="pname" placeholder="Patient Name">
+    <input type="number" id="page" placeholder="Age">
+    <input type="text" id="pdisease" placeholder="Disease">
+
+    <button onclick="savePatient()">Save</button>
+</div>
+
+<!-- TABLE -->
+<table border="1" width="80%" align="center">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Disease</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script src="script.js"></script>
+
+</body>
+</html>

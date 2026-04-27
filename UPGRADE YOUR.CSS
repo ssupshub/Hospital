@@ -1,0 +1,35 @@
+/* LOGIN */
+.login-box {
+    width: 300px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* DASHBOARD CARDS */
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 200px;
+    height: 120px;
+    background: #0077b6;
+    color: white;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    background: #023e8a;
+    transform: scale(1.05);
+}

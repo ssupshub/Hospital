@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="loadPatients()">
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <h2>🏥 Patient Management System</h2>
+    <button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<!-- CONTAINER -->
+<div class="container">
+
+    <!-- LEFT: FORM -->
+    <div class="form-section">
+        <h3>Add / Update Patient</h3>
+
+        <input type="text" id="pname" placeholder="Full Name">
+        <input type="number" id="page" placeholder="Age">
+        <input type="text" id="pdisease" placeholder="Disease">
+        <input type="text" id="pphone" placeholder="Phone Number">
+
+        <button onclick="savePatient()">Save Patient</button>
+    </div>
+
+    <!-- RIGHT: TABLE -->
+    <div class="table-section">
+
+        <!-- SEARCH -->
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search patient...">
+            <button onclick="searchPatient()">Search</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Disease</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="patientTable"></tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

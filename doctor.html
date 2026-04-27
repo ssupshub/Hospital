@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="displayDoctors()">
+
+<h2 style="text-align:center;">Doctor Management</h2>
+
+<!-- SEARCH -->
+<div style="text-align:center;">
+    <input type="text" id="searchDoctor" placeholder="Search doctor">
+    <button onclick="searchDoctor()">Search</button>
+</div>
+
+<br>
+
+<!-- FORM -->
+<div class="form-box">
+    <input type="text" id="dname" placeholder="Doctor Name">
+    <input type="text" id="dspecial" placeholder="Specialization">
+    <input type="number" id="dexp" placeholder="Experience (years)">
+
+    <button onclick="saveDoctor()">Save Doctor</button>
+</div>
+
+<!-- TABLE -->
+<table border="1" width="80%" align="center">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody id="doctorTable"></tbody>
+</table>
+
+<script src="script.js"></script>
+
+</body>
+</html>
