@@ -17,14 +17,11 @@ def create_tables():
 
     # PATIENT
     conn.execute("""
-        conn.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT,
         password TEXT
     )
-""")
-        )
     """)
 
     # DOCTOR
