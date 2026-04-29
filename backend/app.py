@@ -41,6 +41,7 @@ def mongo_to_dict(obj):
     return obj
 
 # Health check endpoint
+@app.route("/api/", methods=["GET"])
 @app.route("/", methods=["GET"])
 def health_check():
     try:
@@ -51,12 +52,14 @@ def health_check():
 
 # ================= PATIENT API =================
 
+@app.route("/api/addPatient", methods=["POST"])
 @app.route("/addPatient", methods=["POST"])
 def add_patient():
     data = request.json
     result = patients_col.insert_one(data)
     return jsonify({"message": "Patient added", "id": str(result.inserted_id)})
 
+@app.route("/api/getPatients", methods=["GET"])
 @app.route("/getPatients", methods=["GET"])
 def get_patients():
     search = request.args.get("search", "")
@@ -70,12 +73,14 @@ def get_patients():
     patients = list(patients_col.find(query).sort("name", 1))
     return jsonify([mongo_to_dict(p) for p in patients])
 
+@app.route("/api/updatePatient/<id>", methods=["PUT"])
 @app.route("/updatePatient/<id>", methods=["PUT"])
 def update_patient(id):
     data = request.json
     patients_col.update_one({"_id": ObjectId(id)}, {"$set": data})
     return jsonify({"message": "Patient updated"})
 
+@app.route("/api/deletePatient/<id>", methods=["DELETE"])
 @app.route("/deletePatient/<id>", methods=["DELETE"])
 def delete_patient(id):
     patients_col.delete_one({"_id": ObjectId(id)})
@@ -83,12 +88,14 @@ def delete_patient(id):
 
 # ================= DOCTOR API =================
 
+@app.route("/api/addDoctor", methods=["POST"])
 @app.route("/addDoctor", methods=["POST"])
 def add_doctor():
     data = request.json
     result = doctors_col.insert_one(data)
     return jsonify({"message": "Doctor added", "id": str(result.inserted_id)})
 
+@app.route("/api/getDoctors", methods=["GET"])
 @app.route("/getDoctors", methods=["GET"])
 def get_doctors():
     search = request.args.get("search", "")
@@ -101,12 +108,14 @@ def get_doctors():
     doctors = list(doctors_col.find(query).sort("name", 1))
     return jsonify([mongo_to_dict(d) for d in doctors])
 
+@app.route("/api/updateDoctor/<id>", methods=["PUT"])
 @app.route("/updateDoctor/<id>", methods=["PUT"])
 def update_doctor(id):
     data = request.json
     doctors_col.update_one({"_id": ObjectId(id)}, {"$set": data})
     return jsonify({"message": "Doctor updated"})
 
+@app.route("/api/deleteDoctor/<id>", methods=["DELETE"])
 @app.route("/deleteDoctor/<id>", methods=["DELETE"])
 def delete_doctor(id):
     doctors_col.delete_one({"_id": ObjectId(id)})
@@ -114,17 +123,20 @@ def delete_doctor(id):
 
 # ================= APPOINTMENT API =================
 
+@app.route("/api/addAppointment", methods=["POST"])
 @app.route("/addAppointment", methods=["POST"])
 def add_appointment():
     data = request.json
     result = appointments_col.insert_one(data)
     return jsonify({"message": "Appointment booked", "id": str(result.inserted_id)})
 
+@app.route("/api/getAppointments", methods=["GET"])
 @app.route("/getAppointments", methods=["GET"])
 def get_appointments():
     appointments = list(appointments_col.find().sort("date", -1))
     return jsonify([mongo_to_dict(a) for a in appointments])
 
+@app.route("/api/deleteAppointment/<id>", methods=["DELETE"])
 @app.route("/deleteAppointment/<id>", methods=["DELETE"])
 def delete_appointment(id):
     appointments_col.delete_one({"_id": ObjectId(id)})
@@ -132,6 +144,7 @@ def delete_appointment(id):
 
 # ================= BILLING API =================
 
+@app.route("/api/addBill", methods=["POST"])
 @app.route("/addBill", methods=["POST"])
 def add_bill():
     data = request.json
@@ -145,11 +158,13 @@ def add_bill():
     result = bills_col.insert_one(data)
     return jsonify({"message": "Bill generated", "id": str(result.inserted_id), "total": data["total"]})
 
+@app.route("/api/getBills", methods=["GET"])
 @app.route("/getBills", methods=["GET"])
 def get_bills():
     bills = list(bills_col.find().sort("_id", -1))
     return jsonify([mongo_to_dict(b) for b in bills])
 
+@app.route("/api/deleteBill/<id>", methods=["DELETE"])
 @app.route("/deleteBill/<id>", methods=["DELETE"])
 def delete_bill(id):
     bills_col.delete_one({"_id": ObjectId(id)})
@@ -157,6 +172,7 @@ def delete_bill(id):
 
 # ================= STATS API =================
 
+@app.route("/api/stats", methods=["GET"])
 @app.route("/stats", methods=["GET"])
 def get_stats():
     pipeline = [{"$group": {"_id": None, "total": {"$sum": "$total"}}}]
