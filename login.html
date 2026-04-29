@@ -8,7 +8,24 @@
 </head>
 <body>
 
-<main class="login-wrapper">
+<header class="navbar">
+    <div class="logo">
+        <div class="logo-icon">LC</div>
+        LifeCare
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patient.html">Patients</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="appointment.html">Appointments</a>
+        <a href="billing.html">Billing</a>
+        <a href="login.html" class="active">Login</a>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">D</button>
+    </nav>
+</header>
+
+<main class="login-wrapper" style="min-height: calc(100vh - 64px);">
     <section class="login-left">
         <div class="branding">
             <h1>Hospital<br>Management<br>System</h1>
@@ -20,7 +37,6 @@
         <form class="login-form" id="loginForm" novalidate>
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <h2>Welcome back</h2>
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">D</button>
             </div>
             <p class="login-subtitle">Enter your credentials to access the dashboard</p>
 
