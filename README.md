@@ -21,8 +21,14 @@ The Hospital Management System is a comprehensive web-based application designed
 ## Project Structure
 ```
 Hospital/
+├── api/
+│   ├── index.py             (Vercel Function Entry Point)
+│   ├── requirements.txt     (Python Dependencies)
+│   └── seed.py              (Database Seeding Script)
 ├── backend/
-│   └── app.py              (Flask API Server with MongoDB)
+│   ├── app.py              (Flask API Server with MongoDB)
+│   ├── requirements.txt     (Legacy Requirements)
+│   └── seed.py              (Legacy Seed Script)
 ├── css/
 │   └── style.css            (Design System with CSS Variables)
 ├── js/
@@ -35,7 +41,7 @@ Hospital/
 ├── appointment.html         (Appointment Booking)
 ├── billing.html             (Billing System)
 ├── .env                     (Environment Configuration)
-├── .env.example             (Environment Template)
+├── vercel.json              (Vercel Configuration)
 └── README.md                (Documentation)
 ```
 
@@ -58,6 +64,12 @@ Hospital/
    ```bash
    python backend/app.py
    ```
+
+### Vercel Deployment (Recommended for Cloud)
+1. Install [Vercel CLI](https://vercel.com/download).
+2. Connect to your GitHub repository and import the project.
+3. Add `MONGO_URI` to your project environment variables in the Vercel Dashboard.
+4. Deploy with `vercel --prod`.
 
 ### Frontend
 The frontend is built using standard web technologies and does not require a build step.
