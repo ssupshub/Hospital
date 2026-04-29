@@ -34,7 +34,6 @@ def mongo_to_dict(obj):
 
 # Health check endpoint
 @app.route("/api/", methods=["GET"])
-@app.route("/", methods=["GET"])
 def health_check():
     try:
         client.admin.command("ping")
