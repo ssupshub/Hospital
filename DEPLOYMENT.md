@@ -299,12 +299,21 @@ Your frontend is now live at `http://<your-ec2-public-ip>`.
 2. Drag and drop your project folder (excluding `backend/` and `.env`).
 3. Site deploys instantly.
 
-### Deploy to Vercel
+### Deploy to Vercel (Full Stack)
 
-1. Push code to GitHub.
-2. Import project at https://vercel.com
-3. Set Framework Preset to "Other".
-4. Deploy.
+Vercel is the easiest way to host both the frontend and backend in a single project.
+
+1. **Prerequisites**: Ensure you have a MongoDB Atlas connection string.
+2. **Project Structure**: The project includes an `api/` directory which Vercel uses for serverless functions.
+3. **Environment Variables**:
+   - In the Vercel Dashboard, go to **Settings > Environment Variables**.
+   - Add `MONGO_URI` with your MongoDB Atlas string.
+4. **Configuration**: The `vercel.json` file in the root handles routing all `/api/*` calls to the Python backend.
+5. **Deployment**:
+   - Push your code to GitHub.
+   - Import the repository in Vercel.
+   - Vercel will automatically detect the settings. Click **Deploy**.
+
 
 ---
 
