@@ -19,8 +19,10 @@ function toggleTheme() {
    CONFIG
    ========================================================================== */
 // Automatically detect the API URL based on where the frontend is hosted.
-// Works for both localhost development and AWS EC2 production.
-const API_URL = `${window.location.protocol}//${window.location.hostname}:5000`;
+// Works for local development, Vercel, and other cloud providers.
+const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? `${window.location.protocol}//${window.location.hostname}:5000`
+    : "/api";
 
 function goTo(page) { window.location.href = page; }
 function logout() { localStorage.removeItem("loggedIn"); window.location.href = "login.html"; }
